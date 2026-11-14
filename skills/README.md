@@ -1,6 +1,10 @@
 # Catalogue des skills
 
-Ce dossier contient le **catalogue source**. Un skill n'est créé que lorsqu'un workflow répété, stable et testable le justifie. Chaque futur skill aura son propre dossier et un `SKILL.md` concis, complété par des scripts ou références uniquement si utiles.
+Ce dossier contient le **catalogue source**. Un skill n'est créé que lorsqu'un workflow répété, stable et testable le justifie. Chaque skill a son propre dossier et un `SKILL.md` concis, complété par des scripts ou références uniquement si utiles.
+
+## Disponible
+
+- [`project-audit`](project-audit/SKILL.md) : audit factuel et strictement non destructif d'un projet existant ou de plusieurs dépôts coordonnés. Il charge seulement les profils technologiques détectés et sépare faits, constats, recommandations et éléments non vérifiés. Voir le [guide d'utilisation](../docs/project-audit.md).
 
 ## Vérification préalable
 
@@ -17,7 +21,7 @@ L'environnement inspecté fournit notamment les skills système `skill-creator`,
 
 | Domaine | Skills prévus | Priorité indicative |
 | --- | --- | --- |
-| Transversal | `project-audit`, `new-project`, `feature-delivery`, `security-review`, `accessibility-audit`, `eco-design-review`, `code-review`, `cost-optimizer`, `release-readiness`, `token-optimization` | `project-audit`, puis revues ciblées |
+| Transversal | `new-project`, `feature-delivery`, `security-review`, `accessibility-audit`, `eco-design-review`, `code-review`, `cost-optimizer`, `release-readiness`, `token-optimization` | Revues ciblées après retour sur `project-audit` |
 | Flutter | `flutter-clean-architecture`, `flutter-cubit`, `flutter-testing`, `flutter-performance` | Haute pour les nouveaux projets Flutter |
 | Angular | `angular-architecture`, `angular-testing`, `angular-performance` | Selon projet pilote |
 | Spring Boot | `spring-api-design`, `spring-security-review`, `spring-testing` | Selon projet pilote |

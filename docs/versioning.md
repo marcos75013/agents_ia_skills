@@ -10,6 +10,8 @@ Le toolkit utilisera des tags Semantic Versioning lorsque ses premiers artefacts
 
 Avant ce jalon, les changements restent traçables par commits et pull requests. Un `CHANGELOG.md` sera ajouté lors de la première release, pas avant.
 
+Le manifeste porte dès maintenant une version de toolkit et une version par ressource. Elles servent à comparer source et installation ; elles ne constituent pas encore une release publiée. `project-audit` commence en `0.1.0` et le manifeste en schéma `1`.
+
 ## Mise à jour
 
 - Vérifier périodiquement la documentation Codex et les catalogues officiels, car les emplacements et capacités évoluent.
