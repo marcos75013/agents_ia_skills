@@ -1,6 +1,6 @@
 # Installation et réutilisation
 
-Cette fondation documente l'installation ; elle ne copie encore aucune ressource automatiquement.
+Le manifeste [`toolkit-manifest.json`](../toolkit-manifest.json) décrit les ressources installables, leur version, leurs technologies et leurs cibles. Le premier script d'installation est volontairement limité à la prévisualisation : il ne copie ni ne remplace aucun fichier.
 
 ## Installation globale
 
@@ -15,6 +15,12 @@ Utiliser pour des workflows personnels stables et indépendants d'un projet :
 
 Le helper officiel `skill-installer` peut cibler `$CODEX_HOME/skills` selon l'installation. Voir [Compatibilité Codex](codex-compatibility.md).
 
+Pour prévisualiser `project-audit` dans l'environnement personnel :
+
+```bash
+python3 scripts/install_toolkit.py --dry-run --scope user --resource project-audit
+```
+
 ## Installation par projet
 
 Sélectionner le socle commun, puis uniquement les ressources utiles :
@@ -26,11 +32,19 @@ Sélectionner le socle commun, puis uniquement les ressources utiles :
 | Spring Boot | standards communs + profil Spring Boot |
 | Angular + Node.js | standards communs + profils Angular et Node.js |
 
-Les skills validés sont copiés vers `.agents/skills/<nom>/`, les agents vers `.codex/agents/` et le modèle d'instructions devient un `AGENTS.md` adapté au dépôt. Ne pas copier tout le catalogue.
+Après une prévisualisation sans conflit, une installation **manuelle** peut copier le dossier source complet `skills/project-audit/` vers `.agents/skills/project-audit/`. Arrêter si la cible existe ; ne pas fusionner ou remplacer son contenu. Les futurs agents iront sous `.codex/agents/` et le modèle d'instructions pourra devenir un `AGENTS.md` adapté au dépôt. Ne pas copier tout le catalogue.
+
+Depuis le toolkit, prévisualiser une installation locale sans écrire :
+
+```bash
+python3 scripts/install_toolkit.py --check --scope project --target /chemin/du/projet --resource project-audit
+```
+
+Ajouter `--technology flutter`, `angular`, `spring-boot`, `nodejs` ou `multi-technology` pour filtrer les ressources compatibles. Le mode `--check` retourne un code non nul si une cible existe avec un contenu différent ; `--dry-run` affiche le même plan mais reste informatif. Les deux modes sont sans écriture dans cette première version.
 
 ## Synchronisation sans écrasement
 
-Une future commande d'installation devra :
+Une future version avec écriture devra :
 
 1. générer un plan et un diff avant écriture ;
 2. comparer version source, version installée et modifications locales ;
@@ -39,4 +53,4 @@ Une future commande d'installation devra :
 5. sauvegarder un manifeste des ressources et versions installées ;
 6. rester idempotente et offrir un mode `--check` sans écriture.
 
-En attendant cet outil, les mises à jour sont manuelles et passent par une pull request dans chaque projet cible.
+En attendant cette version, effectuer la copie manuellement après revue du plan. Une cible différente est signalée `CONFLICT` et ne doit jamais être remplacée silencieusement. Les mises à jour passent par une pull request dans chaque projet cible.

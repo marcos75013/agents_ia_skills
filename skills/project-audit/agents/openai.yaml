@@ -1,0 +1,4 @@
+interface:
+  display_name: "Project Audit"
+  short_description: "Audit a software project without modifying it"
+  default_prompt: "Use $project-audit to audit this project in read-only mode and produce an evidence-based, prioritized report."

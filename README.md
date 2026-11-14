@@ -24,6 +24,7 @@ Le toolkit vise des projets Flutter/Dart, Angular/TypeScript, Java/Spring Boot, 
 | [`docs/`](docs/codex-compatibility.md) | Compatibilité Codex, installation, synchronisation et versionnement. |
 | [`workflows/`](workflows/README.md) | Conception des futurs workflows GitHub réutilisables. |
 | [`scripts/`](scripts/README.md) | Contrôles locaux déterministes et sans dépendance externe. |
+| [`toolkit-manifest.json`](toolkit-manifest.json) | Ressources installables, versions, technologies et cibles. |
 
 Cette arborescence est la **source** du toolkit. Elle est distincte des emplacements découverts par Codex :
 
@@ -40,7 +41,7 @@ Voir [Compatibilité avec Codex](docs/codex-compatibility.md) pour les nuances l
 1. Lire les [standards transversaux](standards/README.md).
 2. Choisir uniquement les profils technologiques et ressources nécessaires.
 3. Pour un nouveau projet, compléter le [modèle de cadrage](templates/new-project/PROJECT_BRIEF.md).
-4. Pour un projet existant, commencer par le [modèle d'audit](templates/existing-project/AUDIT_BRIEF.md).
+4. Pour un projet existant, utiliser [`project-audit`](docs/project-audit.md) ; le modèle d'audit reste utile pour préparer le contexte métier.
 5. Installer les ressources selon le [guide d'installation](docs/installation.md).
 6. Exécuter `python3 scripts/check_toolkit.py` avant une pull request.
 
@@ -48,10 +49,10 @@ Les projets multi-repositories suivent le guide de [coordination inter-repositor
 
 ## État actuel
 
-Cette première version pose les fondations. Elle ne contient encore aucun skill métier complet, agent spécialisé actif, workflow de déploiement ou intégration à un service payant. La feuille de route est documentée sans créer de fichiers factices.
+Le premier skill métier, [`project-audit`](skills/project-audit/SKILL.md), audite un projet en lecture seule avec des profils Flutter, Angular, Spring Boot et Node.js chargés à la demande. Un manifeste versionné et un installateur limité à la prévisualisation préparent sa distribution sans écrasement. Aucun agent spécialisé actif, workflow de déploiement ou service payant n'est ajouté.
 
 ## Références Codex
 
 - [Instructions avec `AGENTS.md`](https://learn.chatgpt.com/docs/agent-configuration/agents-md)
-- [Skills Codex](https://learn.chatgpt.com/docs/agent-configuration/skills)
+- [Skills Codex](https://learn.chatgpt.com/docs/build-skills)
 - [Sous-agents et agents personnalisés](https://learn.chatgpt.com/docs/agent-configuration/subagents)

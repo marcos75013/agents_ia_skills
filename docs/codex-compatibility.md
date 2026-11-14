@@ -1,6 +1,6 @@
 # Compatibilité avec Codex
 
-Vérification effectuée à partir du manuel Codex officiel actualisé lors de l'initialisation du toolkit.
+Vérification actualisée le 14 novembre 2026 à partir de la documentation officielle Codex.
 
 ## Surfaces reconnues
 
@@ -18,7 +18,7 @@ Vérification effectuée à partir du manuel Codex officiel actualisé lors de l
 
 ## Nuance d'installation des skills
 
-La documentation actuelle recommande `.agents/skills` pour les skills personnels et partagés. Le helper `skill-installer` livré avec certaines installations utilise encore `$CODEX_HOME/skills` (souvent `$HOME/.codex/skills`) pour les installations personnelles. Le script d'installation futur devra détecter la version/outillage présent, annoncer la cible et ne jamais écrire silencieusement dans les deux emplacements.
+La documentation actuelle reconnaît `.agents/skills` dans le dépôt et `$HOME/.agents/skills` pour l'utilisateur. Des versions antérieures ou certains helpers peuvent encore utiliser `$CODEX_HOME/skills` (souvent `$HOME/.codex/skills`). Le script du toolkit suit les emplacements actuels, annonce sa cible et reste limité à une prévisualisation ; une future écriture devra détecter explicitement tout environnement historique au lieu d'écrire dans les deux emplacements.
 
 ## Agents et lecture seule
 
@@ -27,5 +27,5 @@ Une définition d'agent peut limiter ses capacités et préciser une mission d'a
 ## Références officielles
 
 - [Instructions `AGENTS.md`](https://learn.chatgpt.com/docs/agent-configuration/agents-md)
-- [Skills](https://learn.chatgpt.com/docs/agent-configuration/skills)
+- [Création et emplacements des skills](https://learn.chatgpt.com/docs/build-skills)
 - [Sous-agents](https://learn.chatgpt.com/docs/agent-configuration/subagents)
