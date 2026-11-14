@@ -32,7 +32,7 @@ Sélectionner le socle commun, puis uniquement les ressources utiles :
 | Spring Boot | standards communs + profil Spring Boot |
 | Angular + Node.js | standards communs + profils Angular et Node.js |
 
-Les skills validés sont copiés vers `.agents/skills/<nom>/`, les agents vers `.codex/agents/` et le modèle d'instructions devient un `AGENTS.md` adapté au dépôt. Ne pas copier tout le catalogue.
+Après une prévisualisation sans conflit, une installation **manuelle** peut copier le dossier source complet `skills/project-audit/` vers `.agents/skills/project-audit/`. Arrêter si la cible existe ; ne pas fusionner ou remplacer son contenu. Les futurs agents iront sous `.codex/agents/` et le modèle d'instructions pourra devenir un `AGENTS.md` adapté au dépôt. Ne pas copier tout le catalogue.
 
 Depuis le toolkit, prévisualiser une installation locale sans écrire :
 

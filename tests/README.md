@@ -12,6 +12,7 @@ The fixtures are created in temporary directories and contain only minimal manif
 - Angular without classifying its build-time Node dependency as a Node backend;
 - Spring Boot from a Maven build;
 - a Node.js backend from its runtime framework;
+- a plain Node.js project without a known server framework;
 - a multi-technology workspace containing all four profiles.
 
-Installer scenarios verify `CREATE`, `UNCHANGED` and `CONFLICT` states and assert that preview mode creates no target files. They validate instruction routing and deterministic helpers; they do not fabricate or assert real audit findings.
+They also verify pruning of generated/dependency directories and safe handling of malformed JSON. Installer scenarios cover project and user destinations, `CREATE`, `UNCHANGED`, `CONFLICT`, invalid manifests and unknown technology filters while asserting that preview mode creates no target files. The toolkit validation scenario checks the manifest, skill frontmatter, UI metadata, internal links and common secret patterns. These tests validate routing and deterministic helpers; they do not fabricate or assert real audit findings.

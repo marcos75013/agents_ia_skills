@@ -6,12 +6,14 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import re
 import sys
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_MANIFEST = ROOT / "toolkit-manifest.json"
+SEMVER = re.compile(r"^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?$")
 
 
 def digest(path: Path) -> str:
@@ -31,22 +33,41 @@ def load_manifest(path: Path) -> dict:
         data = json.loads(path.read_text(encoding="utf-8"))
     except (OSError, UnicodeDecodeError, json.JSONDecodeError) as error:
         raise ValueError(f"cannot read manifest {path}: {error}") from error
-    if data.get("schema_version") != 1 or not isinstance(data.get("resources"), dict):
+    if not isinstance(data, dict) or data.get("schema_version") != 1 or not isinstance(data.get("resources"), dict):
         raise ValueError("unsupported or invalid manifest")
+    if not SEMVER.fullmatch(str(data.get("toolkit_version", ""))):
+        raise ValueError("invalid toolkit version")
+    if not data["resources"]:
+        raise ValueError("manifest contains no resources")
+    for name, resource in data["resources"].items():
+        if not isinstance(name, str) or not isinstance(resource, dict):
+            raise ValueError("invalid resource entry")
+        if resource.get("kind") != "skill" or not SEMVER.fullmatch(str(resource.get("version", ""))):
+            raise ValueError(f"invalid resource metadata: {name}")
+        technologies = resource.get("technologies")
+        if (
+            not isinstance(technologies, list)
+            or not technologies
+            or not all(isinstance(item, str) and item for item in technologies)
+            or len(technologies) != len(set(technologies))
+        ):
+            raise ValueError(f"invalid technologies: {name}")
     return data
 
 
 def destination(base: Path, resource: dict, scope: str) -> Path:
     destinations = resource.get("destinations", {})
+    if not isinstance(destinations, dict):
+        raise ValueError("invalid destinations")
     relative = destinations.get(scope)
-    if not isinstance(relative, str) or Path(relative).is_absolute() or ".." in Path(relative).parts:
+    if not isinstance(relative, str) or not relative or Path(relative) == Path(".") or Path(relative).is_absolute() or ".." in Path(relative).parts:
         raise ValueError(f"invalid {scope} destination")
     return base / relative
 
 
 def source_path(resource: dict) -> Path:
     relative = resource.get("source")
-    if not isinstance(relative, str) or Path(relative).is_absolute() or ".." in Path(relative).parts:
+    if not isinstance(relative, str) or not relative or Path(relative) == Path(".") or Path(relative).is_absolute() or ".." in Path(relative).parts:
         raise ValueError("invalid source path")
     source = (ROOT / relative).resolve()
     try:
@@ -63,7 +84,11 @@ def status(source: Path, target: Path) -> tuple[str, str]:
         return "CREATE", "target does not exist"
     if source.is_dir() != target.is_dir():
         return "CONFLICT", "source and target types differ"
-    if digest(source) == digest(target):
+    try:
+        identical = digest(source) == digest(target)
+    except OSError as error:
+        return "ERROR", f"cannot compare source and target: {error.strerror or error.__class__.__name__}"
+    if identical:
         return "UNCHANGED", "target matches source"
     return "CONFLICT", "target exists with different content"
 
@@ -101,7 +126,17 @@ def main() -> int:
         return 2
 
     technology_filter = set(args.technologies or [])
+    known_technologies = {
+        technology
+        for resource in available.values()
+        for technology in resource.get("technologies", [])
+    }
+    unknown_technologies = sorted(technology_filter.difference(known_technologies))
+    if unknown_technologies:
+        print(f"ERROR: unknown technologies: {', '.join(unknown_technologies)}", file=sys.stderr)
+        return 2
     conflicts = False
+    errors = False
     print(f"Toolkit {manifest.get('toolkit_version', 'unversioned')} installation preview")
     print(f"Scope: {args.scope}; base: {base}")
     for name in selected:
@@ -115,13 +150,16 @@ def main() -> int:
             target = destination(base, resource, args.scope)
         except ValueError as error:
             print(f"ERROR {name}: {error}")
-            conflicts = True
+            errors = True
             continue
         state, detail = status(source, target)
         print(f"{state} {name} {resource.get('version', 'unversioned')}: {source} -> {target} ({detail})")
-        conflicts = conflicts or state in {"CONFLICT", "ERROR"}
+        conflicts = conflicts or state == "CONFLICT"
+        errors = errors or state == "ERROR"
 
     print("No files were modified. This preview-only version never writes to the target.")
+    if errors:
+        return 2
     return 1 if args.check and conflicts else 0
 
 

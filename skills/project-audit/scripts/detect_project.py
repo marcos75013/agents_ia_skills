@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 from pathlib import Path
 
 
@@ -19,14 +20,14 @@ MANIFESTS = {
     "settings.gradle",
     "settings.gradle.kts",
 }
+SPRING_BOOT_MARKERS = ("org.springframework.boot", "spring-boot-")
 
 
 def candidates(root: Path):
-    for path in root.rglob("*"):
-        if any(part in IGNORED for part in path.relative_to(root).parts):
-            continue
-        if path.is_file() and path.name in MANIFESTS:
-            yield path
+    for current, directories, filenames in os.walk(root, followlinks=False):
+        directories[:] = sorted(name for name in directories if name not in IGNORED)
+        for name in sorted(MANIFESTS.intersection(filenames)):
+            yield Path(current) / name
 
 
 def package_json_signals(path: Path) -> set[str]:
@@ -34,16 +35,19 @@ def package_json_signals(path: Path) -> set[str]:
         data = json.loads(path.read_text(encoding="utf-8"))
     except (OSError, UnicodeDecodeError, json.JSONDecodeError):
         return set()
+    if not isinstance(data, dict):
+        return set()
     dependencies = {}
     for key in ("dependencies", "devDependencies", "peerDependencies"):
         value = data.get(key, {})
         if isinstance(value, dict):
             dependencies.update(value)
     signals = set()
-    if "@angular/core" in dependencies:
+    is_angular = "@angular/core" in dependencies
+    if is_angular:
         signals.add("angular")
     backend_packages = {"express", "fastify", "@nestjs/core", "koa", "hapi", "@hapi/hapi"}
-    if backend_packages.intersection(dependencies) or any(part in path.parts for part in ("server", "backend", "api")):
+    if not is_angular or backend_packages.intersection(dependencies):
         signals.add("nodejs")
     return signals
 
@@ -64,7 +68,8 @@ def detect(path: Path) -> set[str]:
             text = path.read_text(encoding="utf-8", errors="replace")
         except OSError:
             return {"java"}
-        return {"spring-boot"} if "spring" in text.lower() else {"java"}
+        lowered = text.lower()
+        return {"spring-boot"} if any(marker in lowered for marker in SPRING_BOOT_MARKERS) else {"java"}
     return set()
 
 

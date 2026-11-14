@@ -23,6 +23,12 @@ Pour plusieurs dépôts, fournir leurs chemins ou accès autorisés et préciser
 
 Le détecteur optionnel `scripts/detect_project.py` du skill inventorie uniquement les manifests. Il ne lance aucun outil du projet et son résultat doit être vérifié par l'auditeur.
 
+## État opérationnel
+
+Sont opérationnels : les instructions d'audit, le routage progressif vers les quatre profils, l'inventaire statique des manifests, le format de rapport, les contrôles du toolkit et la prévisualisation d'installation avec détection des conflits.
+
+Restent volontairement manuels ou non implémentés : la copie d'installation, l'exécution des tests propres au projet audité, la consultation des prix/quota externes, la génération d'`AGENTS.md`, les agents spécialisés et toute modification ou livraison du projet. `project-audit` guide Codex ; ce n'est pas un scanner autonome garantissant une couverture exhaustive.
+
 ## Lecture du rapport
 
 - **Fact** : preuve directe dans un fichier, une configuration ou une sortie de version.
