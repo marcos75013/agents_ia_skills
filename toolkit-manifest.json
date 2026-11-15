@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "toolkit_version": "0.2.0",
+  "toolkit_version": "0.3.0",
   "resources": {
     "project-audit": {
       "kind": "skill",
@@ -16,6 +16,22 @@
       "destinations": {
         "project": ".agents/skills/project-audit",
         "user": ".agents/skills/project-audit"
+      }
+    },
+    "code-reviewer": {
+      "kind": "agent",
+      "version": "0.1.0",
+      "source": "agents/code-reviewer.toml",
+      "technologies": [
+        "flutter",
+        "angular",
+        "spring-boot",
+        "nodejs",
+        "multi-technology"
+      ],
+      "destinations": {
+        "project": ".codex/agents/code-reviewer.toml",
+        "user": ".codex/agents/code-reviewer.toml"
       }
     }
   }

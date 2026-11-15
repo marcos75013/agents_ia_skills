@@ -21,6 +21,8 @@ Pour prévisualiser `project-audit` dans l'environnement personnel :
 python3 scripts/install_toolkit.py --dry-run --scope user --resource project-audit
 ```
 
+Pour Code Reviewer, utiliser `--resource code-reviewer`. Sa cible personnelle est `$HOME/.codex/agents/code-reviewer.toml`.
+
 ## Installation par projet
 
 Sélectionner le socle commun, puis uniquement les ressources utiles :
@@ -32,7 +34,7 @@ Sélectionner le socle commun, puis uniquement les ressources utiles :
 | Spring Boot | standards communs + profil Spring Boot |
 | Angular + Node.js | standards communs + profils Angular et Node.js |
 
-Après une prévisualisation sans conflit, une installation **manuelle** peut copier le dossier source complet `skills/project-audit/` vers `.agents/skills/project-audit/`. Arrêter si la cible existe ; ne pas fusionner ou remplacer son contenu. Les futurs agents iront sous `.codex/agents/` et le modèle d'instructions pourra devenir un `AGENTS.md` adapté au dépôt. Ne pas copier tout le catalogue.
+Après une prévisualisation sans conflit, une installation **manuelle** peut copier le dossier source complet `skills/project-audit/` vers `.agents/skills/project-audit/`, ou `agents/code-reviewer.toml` vers `.codex/agents/code-reviewer.toml`. Arrêter si la cible existe ; ne pas fusionner ou remplacer son contenu. Ne pas copier tout le catalogue.
 
 Depuis le toolkit, prévisualiser une installation locale sans écrire :
 
@@ -41,6 +43,8 @@ python3 scripts/install_toolkit.py --check --scope project --target /chemin/du/p
 ```
 
 Ajouter `--technology flutter`, `angular`, `spring-boot`, `nodejs` ou `multi-technology` pour filtrer les ressources compatibles. Le mode `--check` retourne un code non nul si une cible existe avec un contenu différent ; `--dry-run` affiche le même plan mais reste informatif. Les deux modes sont sans écriture dans cette première version.
+
+Le guide [Code Reviewer](code-reviewer.md) détaille son invocation et la limite de ses garanties de lecture seule.
 
 ## Déclenchement et réutilisation du rapport
 

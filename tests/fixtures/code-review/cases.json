@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "cases": [
+    {
+      "id": "flutter-cubit-percentage",
+      "technology": "flutter",
+      "classification": "known-finding",
+      "expected_severity": "high",
+      "expected_file": "lib/cart/cart_cubit.dart",
+      "diff": "diff --git a/lib/cart/cart_cubit.dart b/lib/cart/cart_cubit.dart\n@@ -40,3 +40,3 @@\n- final discounted = state.total * (1 - percentage / 100);\n+ final discounted = state.total * percentage;\n  emit(state.copyWith(total: discounted));"
+    },
+    {
+      "id": "angular-wrong-delete-id",
+      "technology": "angular",
+      "classification": "known-finding",
+      "expected_severity": "high",
+      "expected_file": "src/app/users/user.service.ts",
+      "diff": "diff --git a/src/app/users/user.service.ts b/src/app/users/user.service.ts\n@@ -18,2 +18,2 @@\n- return this.http.delete(`/api/users/${userId}`);\n+ return this.http.delete(`/api/users/${this.currentUser.id}`);"
+    },
+    {
+      "id": "spring-inverted-owner-check",
+      "technology": "spring-boot",
+      "classification": "known-finding",
+      "expected_severity": "critical",
+      "expected_file": "src/main/java/app/AccountService.java",
+      "diff": "diff --git a/src/main/java/app/AccountService.java b/src/main/java/app/AccountService.java\n@@ -52,3 +52,3 @@\n- if (!actor.id().equals(account.ownerId())) throw forbidden();\n+ if (actor.id().equals(account.ownerId())) throw forbidden();\n  return account;"
+    },
+    {
+      "id": "node-double-response",
+      "technology": "nodejs",
+      "classification": "known-finding",
+      "expected_severity": "medium",
+      "expected_file": "src/routes/users.ts",
+      "diff": "diff --git a/src/routes/users.ts b/src/routes/users.ts\n@@ -21,3 +21,3 @@\n- if (!user) return res.status(404).json({ error: 'not found' });\n+ if (!user) res.status(404).json({ error: 'not found' });\n  return res.json(user);"
+    },
+    {
+      "id": "flutter-clean-cubit-test",
+      "technology": "flutter",
+      "classification": "clean",
+      "diff": "diff --git a/test/cart/cart_cubit_test.dart b/test/cart/cart_cubit_test.dart\n@@ -12,2 +12,3 @@\n  expect(cubit.state.items, isEmpty);\n+ expect(cubit.state.total, 0);"
+    },
+    {
+      "id": "node-clean-input-guard",
+      "technology": "nodejs",
+      "classification": "clean",
+      "diff": "diff --git a/src/routes/orders.ts b/src/routes/orders.ts\n@@ -10,2 +10,3 @@\n+ if (!Number.isInteger(quantity) || quantity < 1) return res.status(400).end();\n  const order = await createOrder(quantity);"
+    }
+  ]
+}

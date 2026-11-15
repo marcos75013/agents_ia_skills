@@ -6,6 +6,7 @@ from __future__ import annotations
 import json
 import re
 import sys
+import tomllib
 from pathlib import Path
 from urllib.parse import unquote
 
@@ -17,12 +18,15 @@ REQUIRED = (
     "standards/README.md",
     "skills/README.md",
     "agents/README.md",
+    "agents/code-reviewer.toml",
     "templates/README.md",
     "docs/codex-compatibility.md",
     "docs/installation.md",
     "docs/versioning.md",
     "docs/project-audit.md",
     "docs/project-audit-evaluation.md",
+    "docs/code-reviewer.md",
+    "docs/code-reviewer-evaluation.md",
     "toolkit-manifest.json",
     "skills/project-audit/SKILL.md",
     ".github/workflows/toolkit-ci.yml",
@@ -78,7 +82,8 @@ def check_manifest(errors: list[str]) -> None:
         if not SKILL_NAME.fullmatch(name) or not isinstance(resource, dict):
             errors.append(f"ressource invalide dans le manifeste: {name}")
             continue
-        if resource.get("kind") != "skill":
+        kind = resource.get("kind")
+        if kind not in {"skill", "agent"}:
             errors.append(f"type de ressource non supporté: {name}")
         if not SEMVER.fullmatch(str(resource.get("version", ""))):
             errors.append(f"version de ressource invalide: {name}")
@@ -106,6 +111,13 @@ def check_manifest(errors: list[str]) -> None:
             errors.append(f"SKILL.md absent pour la ressource: {name}")
         if resource.get("kind") == "skill" and source.name != name:
             errors.append(f"nom de source incohérent pour la ressource: {name}")
+        if kind == "agent":
+            if not source.is_file() or source.suffix != ".toml":
+                errors.append(f"source TOML absente pour l'agent: {name}")
+            elif source.stem != name:
+                errors.append(f"nom de source incohérent pour l'agent: {name}")
+            else:
+                check_agent(source, errors)
         destinations = resource.get("destinations")
         if not isinstance(destinations, dict):
             errors.append(f"destinations invalides: {name}")
@@ -120,6 +132,25 @@ def valid_relative_path(value: object) -> bool:
         return False
     path = Path(value)
     return path != Path(".") and not path.is_absolute() and ".." not in path.parts
+
+
+def check_agent(path: Path, errors: list[str]) -> None:
+    try:
+        data = tomllib.loads(path.read_text(encoding="utf-8"))
+    except (OSError, UnicodeDecodeError, tomllib.TOMLDecodeError) as error:
+        errors.append(f"agent TOML invalide: {path.relative_to(ROOT)}: {error}")
+        return
+    for field in ("name", "description", "developer_instructions"):
+        if not isinstance(data.get(field), str) or not data[field].strip():
+            errors.append(f"champ agent absent ou invalide ({field}): {path.relative_to(ROOT)}")
+    if data.get("name") != "code_reviewer":
+        errors.append(f"nom d'agent inattendu: {path.relative_to(ROOT)}")
+    forbidden = {"sandbox_mode", "approval_policy", "model_provider", "mcp_servers"}
+    for field in sorted(forbidden.intersection(data)):
+        errors.append(f"réglage hérité interdit dans l'agent ({field}): {path.relative_to(ROOT)}")
+    features = data.get("features", {})
+    if not isinstance(features, dict) or features.get("request_permissions_tool") is not False:
+        errors.append(f"l'agent doit désactiver les demandes de permissions: {path.relative_to(ROOT)}")
 
 
 def check_skill(path: Path, errors: list[str]) -> None:
