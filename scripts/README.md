@@ -6,7 +6,7 @@ Les scripts automatisent les contrôles déterministes afin de réduire erreurs 
 python3 scripts/check_toolkit.py
 ```
 
-Le contrôle utilise uniquement la bibliothèque standard Python. Il vérifie les fichiers requis, fichiers vides, liens Markdown locaux, marqueurs de conflit et formes courantes de secrets. Il ne remplace pas une revue humaine ni un scanner de secrets spécialisé.
+Le contrôle utilise uniquement la bibliothèque standard Python. Il vérifie les fichiers requis, fichiers vides, liens Markdown locaux, marqueurs de conflit, formes courantes de secrets, manifeste, skills et configuration TOML de Code Reviewer. Il ne remplace pas une revue humaine ni un scanner de secrets spécialisé.
 
 Les autres scripts sans dépendance externe sont :
 
