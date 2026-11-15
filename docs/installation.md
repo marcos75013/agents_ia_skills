@@ -42,6 +42,14 @@ python3 scripts/install_toolkit.py --check --scope project --target /chemin/du/p
 
 Ajouter `--technology flutter`, `angular`, `spring-boot`, `nodejs` ou `multi-technology` pour filtrer les ressources compatibles. Le mode `--check` retourne un code non nul si une cible existe avec un contenu différent ; `--dry-run` affiche le même plan mais reste informatif. Les deux modes sont sans écriture dans cette première version.
 
+## Déclenchement et réutilisation du rapport
+
+Après la copie manuelle, démarrer une nouvelle session Codex dans le projet et demander explicitement : `Utilise $project-audit pour auditer ce dépôt en lecture seule.` Vérifier que le skill est disponible en demandant à Codex de confirmer son chemin avant l'audit. La procédure est identique pour Flutter, Angular, Spring Boot et Node.js ; le skill charge seulement le profil détecté.
+
+Le rapport doit être conservé comme artefact de revue ou dans une issue, pas recopié automatiquement dans `AGENTS.md`. Valider d'abord chaque fait et priorité, puis transformer uniquement les conventions stables et répétées en instructions projet. Les recommandations ponctuelles restent dans le backlog.
+
+Pour plusieurs repositories, installer ou rendre disponible le skill dans chaque session, auditer chaque dépôt séparément, puis produire la matrice de contrats décrite dans [Projets multi-repositories](multi-repository.md). Ne pas fusionner les faits propres à un dépôt avec les inférences système.
+
 ## Synchronisation sans écrasement
 
 Une future version avec écriture devra :

@@ -43,13 +43,13 @@ Voir [Compatibilité avec Codex](docs/codex-compatibility.md) pour les nuances l
 3. Pour un nouveau projet, compléter le [modèle de cadrage](templates/new-project/PROJECT_BRIEF.md).
 4. Pour un projet existant, utiliser [`project-audit`](docs/project-audit.md) ; le modèle d'audit reste utile pour préparer le contexte métier.
 5. Installer les ressources selon le [guide d'installation](docs/installation.md).
-6. Exécuter `python3 scripts/check_toolkit.py` avant une pull request.
+6. Exécuter `python3 scripts/check_toolkit.py` et les tests avant une pull request ; la CI applique ensuite les mêmes contrôles.
 
 Les projets multi-repositories suivent le guide de [coordination inter-repositories](docs/multi-repository.md). La politique de versions et de mises à jour est décrite dans [Versionnement](docs/versioning.md).
 
 ## État actuel
 
-Le premier skill métier, [`project-audit`](skills/project-audit/SKILL.md), audite un projet en lecture seule avec des profils Flutter, Angular, Spring Boot et Node.js chargés à la demande. Un manifeste versionné et un installateur limité à la prévisualisation préparent sa distribution sans écrasement. Aucun agent spécialisé actif, workflow de déploiement ou service payant n'est ajouté.
+Le premier skill métier, [`project-audit`](skills/project-audit/SKILL.md), audite un projet en lecture seule avec des profils Flutter, Angular, Spring Boot et Node.js chargés à la demande. Un manifeste versionné et un installateur limité à la prévisualisation préparent sa distribution sans écrasement. Une CI gratuite valide les pull requests ; aucun agent spécialisé actif, workflow de déploiement ou service payant n'est ajouté.
 
 ## Références Codex
 

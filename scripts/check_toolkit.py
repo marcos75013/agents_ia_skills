@@ -22,10 +22,12 @@ REQUIRED = (
     "docs/installation.md",
     "docs/versioning.md",
     "docs/project-audit.md",
+    "docs/project-audit-evaluation.md",
     "toolkit-manifest.json",
     "skills/project-audit/SKILL.md",
+    ".github/workflows/toolkit-ci.yml",
 )
-IGNORED_PARTS = {".git", ".venv", "node_modules", "build", "dist"}
+IGNORED_PARTS = {".git", ".idea", ".venv", "node_modules", "build", "dist"}
 MARKDOWN_LINK = re.compile(r"\[[^\]]*\]\(([^)]+)\)")
 SECRET_PATTERNS = {
     "private key": re.compile(r"-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----"),
@@ -144,6 +146,31 @@ def check_skill(path: Path, errors: list[str]) -> None:
         check_openai_metadata(metadata, name, errors)
 
 
+def check_workflow(errors: list[str]) -> None:
+    path = ROOT / ".github/workflows/toolkit-ci.yml"
+    try:
+        content = path.read_text(encoding="utf-8")
+    except (OSError, UnicodeDecodeError) as error:
+        errors.append(f"workflow CI illisible: {error}")
+        return
+    required_fragments = (
+        "pull_request:",
+        "permissions:\n  contents: read",
+        "timeout-minutes:",
+        "actions/checkout@v4",
+        "actions/setup-python@v5",
+        "python3 scripts/check_toolkit.py",
+        "python3 -m unittest discover -s tests -v",
+    )
+    for fragment in required_fragments:
+        if fragment not in content:
+            errors.append(f"workflow CI incomplet: {fragment}")
+    if "pull_request_target" in content:
+        errors.append("workflow CI interdit: pull_request_target")
+    if "secrets." in content:
+        errors.append("workflow CI ne doit pas lire de secret")
+
+
 def check_openai_metadata(path: Path, skill_name: str, errors: list[str]) -> None:
     try:
         content = path.read_text(encoding="utf-8")
@@ -209,6 +236,7 @@ def main() -> int:
     errors: list[str] = []
     check_required(errors)
     check_manifest(errors)
+    check_workflow(errors)
     for path in files():
         check_content(path, errors)
         if path.name == "SKILL.md":

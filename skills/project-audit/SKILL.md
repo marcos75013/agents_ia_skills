@@ -39,4 +39,4 @@ Produce a concise, evidence-based audit without changing the audited project.
 
 ## Output
 
-Return a short executive summary, scope and technology inventory, architecture map, prioritized findings, AI-integration proposals, unverified items, and the commands/checks performed. Rank each recommendation by priority, effort and change risk. Propose `AGENTS.md`, skills, agents and CI improvements, but do not create them during the audit.
+Return a short executive summary, scope and technology inventory, architecture map, prioritized findings, AI-integration proposals, unverified items, and the commands/checks performed. Rank each recommendation by priority, impact, effort and change risk. When observable, include inventory size, files inspected in detail, command count, elapsed time and redundant reads. Report token usage only when the environment exposes it; never estimate it. Propose `AGENTS.md`, skills, agents and CI improvements, but do not create them during the audit.
