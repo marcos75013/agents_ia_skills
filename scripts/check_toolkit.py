@@ -157,8 +157,9 @@ def check_workflow(errors: list[str]) -> None:
         "pull_request:",
         "permissions:\n  contents: read",
         "timeout-minutes:",
-        "actions/checkout@v4",
-        "actions/setup-python@v5",
+        "runs-on: ubuntu-24.04",
+        "actions/checkout@v7",
+        "actions/setup-python@v7",
         "python3 scripts/check_toolkit.py",
         "python3 -m unittest discover -s tests -v",
     )
