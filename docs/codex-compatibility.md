@@ -1,6 +1,6 @@
 # Compatibilité avec Codex
 
-Vérification actualisée le 14 novembre 2026 à partir de la documentation officielle Codex.
+Vérification actualisée le 15 novembre 2026 à partir de la documentation officielle Codex.
 
 ## Surfaces reconnues
 
@@ -9,8 +9,8 @@ Vérification actualisée le 14 novembre 2026 à partir de la documentation offi
 | Instructions durables du dépôt | `AGENTS.md` et modèle sous `templates/` | `AGENTS.md`, avec fichiers plus spécifiques dans les sous-dossiers si nécessaire |
 | Skill partagé | futur dossier sous `skills/` | `.agents/skills/<nom>/SKILL.md` |
 | Skill personnel | futur dossier sous `skills/` | `$HOME/.agents/skills/<nom>/SKILL.md` |
-| Agent projet | future définition sous `agents/` | `.codex/agents/<nom>.toml` |
-| Agent personnel | future définition sous `agents/` | `$HOME/.codex/agents/<nom>.toml` |
+| Agent projet | `agents/code-reviewer.toml` | `.codex/agents/code-reviewer.toml` |
+| Agent personnel | `agents/code-reviewer.toml` | `$HOME/.codex/agents/code-reviewer.toml` |
 | Configuration projet | non fournie par défaut | `.codex/config.toml` dans un dépôt approuvé |
 | Workflow GitHub actif | source validée au cas par cas | `.github/workflows/<nom>.yml` |
 
@@ -22,7 +22,7 @@ La documentation actuelle reconnaît `.agents/skills` dans le dépôt et `$HOME/
 
 ## Agents et lecture seule
 
-Une définition d'agent peut limiter ses capacités et préciser une mission d'audit, mais ses instructions ne suffisent pas à garantir un sandbox en lecture seule. La session parente et sa politique de permissions restent déterminantes. Les agents héritent notamment des permissions et intégrations de leur parent.
+Une définition d'agent doit fournir `name`, `description` et `developer_instructions`. Elle peut limiter certaines capacités, mais ses instructions ne suffisent pas à garantir un sandbox en lecture seule. La session parente et sa politique de permissions restent déterminantes. Les agents héritent notamment des permissions et intégrations de leur parent ; `sandbox_mode` ou `approval_policy` dans le fichier agent ne les remplacent pas.
 
 ## Références officielles
 

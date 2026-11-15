@@ -42,7 +42,7 @@ def load_manifest(path: Path) -> dict:
     for name, resource in data["resources"].items():
         if not isinstance(name, str) or not isinstance(resource, dict):
             raise ValueError("invalid resource entry")
-        if resource.get("kind") != "skill" or not SEMVER.fullmatch(str(resource.get("version", ""))):
+        if resource.get("kind") not in {"skill", "agent"} or not SEMVER.fullmatch(str(resource.get("version", ""))):
             raise ValueError(f"invalid resource metadata: {name}")
         technologies = resource.get("technologies")
         if (

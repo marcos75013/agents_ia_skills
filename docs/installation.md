@@ -21,6 +21,8 @@ Pour prévisualiser `project-audit` dans l'environnement personnel :
 python3 scripts/install_toolkit.py --dry-run --scope user --resource project-audit
 ```
 
+Pour Code Reviewer, utiliser `--resource code-reviewer`. Sa cible personnelle est `$HOME/.codex/agents/code-reviewer.toml`.
+
 ## Installation par projet
 
 Sélectionner le socle commun, puis uniquement les ressources utiles :
@@ -32,7 +34,7 @@ Sélectionner le socle commun, puis uniquement les ressources utiles :
 | Spring Boot | standards communs + profil Spring Boot |
 | Angular + Node.js | standards communs + profils Angular et Node.js |
 
-Après une prévisualisation sans conflit, une installation **manuelle** peut copier le dossier source complet `skills/project-audit/` vers `.agents/skills/project-audit/`. Arrêter si la cible existe ; ne pas fusionner ou remplacer son contenu. Les futurs agents iront sous `.codex/agents/` et le modèle d'instructions pourra devenir un `AGENTS.md` adapté au dépôt. Ne pas copier tout le catalogue.
+Après une prévisualisation sans conflit, une installation **manuelle** peut copier le dossier source complet `skills/project-audit/` vers `.agents/skills/project-audit/`, ou `agents/code-reviewer.toml` vers `.codex/agents/code-reviewer.toml`. Arrêter si la cible existe ; ne pas fusionner ou remplacer son contenu. Ne pas copier tout le catalogue.
 
 Depuis le toolkit, prévisualiser une installation locale sans écrire :
 
@@ -41,6 +43,16 @@ python3 scripts/install_toolkit.py --check --scope project --target /chemin/du/p
 ```
 
 Ajouter `--technology flutter`, `angular`, `spring-boot`, `nodejs` ou `multi-technology` pour filtrer les ressources compatibles. Le mode `--check` retourne un code non nul si une cible existe avec un contenu différent ; `--dry-run` affiche le même plan mais reste informatif. Les deux modes sont sans écriture dans cette première version.
+
+Le guide [Code Reviewer](code-reviewer.md) détaille son invocation et la limite de ses garanties de lecture seule.
+
+## Déclenchement et réutilisation du rapport
+
+Après la copie manuelle, démarrer une nouvelle session Codex dans le projet et demander explicitement : `Utilise $project-audit pour auditer ce dépôt en lecture seule.` Vérifier que le skill est disponible en demandant à Codex de confirmer son chemin avant l'audit. La procédure est identique pour Flutter, Angular, Spring Boot et Node.js ; le skill charge seulement le profil détecté.
+
+Le rapport doit être conservé comme artefact de revue ou dans une issue, pas recopié automatiquement dans `AGENTS.md`. Valider d'abord chaque fait et priorité, puis transformer uniquement les conventions stables et répétées en instructions projet. Les recommandations ponctuelles restent dans le backlog.
+
+Pour plusieurs repositories, installer ou rendre disponible le skill dans chaque session, auditer chaque dépôt séparément, puis produire la matrice de contrats décrite dans [Projets multi-repositories](multi-repository.md). Ne pas fusionner les faits propres à un dépôt avec les inférences système.
 
 ## Synchronisation sans écrasement
 

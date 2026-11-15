@@ -37,6 +37,13 @@ class ProjectAuditDetectionTests(unittest.TestCase):
         result = self.detect({"pubspec.yaml": "dependencies:\n  flutter:\n    sdk: flutter\n"})
         self.assertEqual(result["technologies"], ["flutter"])
 
+    def test_flutter_without_cubit_remains_a_flutter_fact_only(self):
+        result = self.detect({
+            "pubspec.yaml": "dependencies:\n  flutter:\n    sdk: flutter\n",
+            "lib/main.dart": "class LocalState { void setState() {} }",
+        })
+        self.assertEqual(result["technologies"], ["flutter"])
+
     def test_angular_is_not_misclassified_as_node_backend(self):
         result = self.detect({
             "angular.json": "{}",
@@ -70,6 +77,26 @@ class ProjectAuditDetectionTests(unittest.TestCase):
         self.assertEqual(result["technologies"], [])
         self.assertEqual(result["manifests"][0]["signals"], [])
 
+    def test_incomplete_repository_returns_an_empty_inventory(self):
+        result = self.detect({"README.md": "work in progress"})
+        self.assertEqual(result["technologies"], [])
+        self.assertEqual(result["manifests"], [])
+
+    def test_detector_does_not_modify_the_audited_tree(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            manifest = root / "pubspec.yaml"
+            manifest.write_text("dependencies:\n  flutter:\n    sdk: flutter\n", encoding="utf-8")
+            before = {path.relative_to(root): path.read_bytes() for path in root.rglob("*") if path.is_file()}
+            subprocess.run(
+                [sys.executable, str(DETECTOR), str(root)],
+                check=True,
+                capture_output=True,
+                text=True,
+            )
+            after = {path.relative_to(root): path.read_bytes() for path in root.rglob("*") if path.is_file()}
+            self.assertEqual(after, before)
+
     def test_multi_technology(self):
         result = self.detect({
             "mobile/pubspec.yaml": "dependencies:\n  flutter:\n    sdk: flutter\n",
@@ -82,10 +109,15 @@ class ProjectAuditDetectionTests(unittest.TestCase):
 
     def test_skill_routes_all_supported_profiles_and_is_read_only(self):
         instructions = SKILL.read_text(encoding="utf-8")
+        report_guide = (SKILL.parent / "references/audit-and-report.md").read_text(encoding="utf-8")
         for reference in ("flutter.md", "angular.md", "spring-boot.md", "nodejs.md"):
             self.assertIn(f"references/{reference}", instructions)
         self.assertIn("Do not edit files", instructions)
         self.assertIn("facts, findings, recommendations and unverified items separately", instructions)
+        for level in ("**Fact:**", "**Finding:**", "**Recommendation:**", "**Unverified:**"):
+            self.assertIn(level, report_guide)
+        self.assertIn("Never invent versions", instructions)
+        self.assertIn("never estimate", instructions)
 
 
 class InstallerPreviewTests(unittest.TestCase):
@@ -160,6 +192,7 @@ class ToolkitValidationTests(unittest.TestCase):
         errors: list[str] = []
         module.check_required(errors)
         module.check_manifest(errors)
+        module.check_workflow(errors)
         for path in module.files():
             module.check_content(path, errors)
             if path.name == "SKILL.md":

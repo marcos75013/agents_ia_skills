@@ -1,0 +1,33 @@
+name: Toolkit CI
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: toolkit-ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
+      - name: Validate manifest JSON
+        run: python3 -m json.tool toolkit-manifest.json > /dev/null
+
+      - name: Check toolkit structure and content
+        run: python3 scripts/check_toolkit.py
+
+      - name: Run automated tests
+        run: python3 -m unittest discover -s tests -v
