@@ -25,9 +25,9 @@ Le détecteur optionnel `scripts/detect_project.py` du skill inventorie uniqueme
 
 ## État opérationnel
 
-Sont opérationnels : les instructions d'audit, le routage progressif vers les quatre profils, l'inventaire statique des manifests, le format de rapport, les contrôles du toolkit et la prévisualisation d'installation avec détection des conflits.
+Sont opérationnels : les instructions d'audit, le routage progressif vers les quatre profils, l'inventaire statique des manifests, le format de rapport, les contrôles du toolkit ainsi que l'installation et la mise à jour sécurisées avec prévisualisation, état, sauvegardes et détection des conflits.
 
-Restent volontairement manuels ou non implémentés : la copie d'installation, l'exécution des tests propres au projet audité, la consultation des prix/quota externes, la génération d'`AGENTS.md`, les agents spécialisés et toute modification ou livraison du projet. `project-audit` guide Codex ; ce n'est pas un scanner autonome garantissant une couverture exhaustive.
+Restent volontairement manuels ou non implémentés : l'exécution des tests propres au projet audité, la consultation des prix/quota externes, la génération d'`AGENTS.md`, les agents Architect et Security Auditor, et toute modification ou livraison du projet. Le sous-agent Code Reviewer est disponible séparément. `project-audit` guide Codex ; ce n'est pas un scanner autonome garantissant une couverture exhaustive.
 
 ## Lecture du rapport
 
@@ -54,4 +54,4 @@ Les profils Angular, Spring Boot et Node.js suivent la même logique : versions 
 
 Après validation humaine du rapport, lancer une tâche distincte pour créer ou modifier les instructions du projet. Fournir seulement les constats retenus, les commandes vérifiées et les contraintes durables. Garder `AGENTS.md` court ; confier les workflows détaillés à des skills et les contrôles déterministes au lint, aux tests ou à la CI.
 
-Les sous-agents Architect, Reviewer et Security Auditor restent sur la [feuille de route](../agents/README.md). Leur création n'est justifiée qu'après des audits réels montrant un besoin de spécialisation ou de parallélisation.
+Le sous-agent Code Reviewer est disponible. Architect et Security Auditor restent sur la [feuille de route](../agents/README.md) et ne seront créés qu'après des audits réels montrant un besoin de spécialisation.

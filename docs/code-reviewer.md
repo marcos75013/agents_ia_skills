@@ -27,10 +27,14 @@ python3 scripts/install_toolkit.py --check --scope project --target /chemin/du/p
 python3 scripts/install_toolkit.py --check --scope user --target "$HOME" --resource code-reviewer
 ```
 
-Après vérification d'une cible `CREATE`, copier manuellement le fichier sans écraser de personnalisation :
+Après vérification du plan, installer sans écraser de personnalisation :
 
-- projet : `agents/code-reviewer.toml` vers `.codex/agents/code-reviewer.toml` ;
-- personnel : `agents/code-reviewer.toml` vers `$HOME/.codex/agents/code-reviewer.toml`.
+```bash
+python3 scripts/install_toolkit.py --install --scope project --target /chemin/du/projet --resource code-reviewer
+python3 scripts/install_toolkit.py --install --scope user --target "$HOME" --resource code-reviewer
+```
+
+Pour une version ultérieure, exécuter d'abord `--check`, puis remplacer `--install` par `--update`. La mise à jour refuse une cible personnalisée et conserve une sauvegarde de la version remplacée.
 
 Redémarrer la session Codex si l'agent n'est pas découvert dynamiquement. Le nom d'invocation est `code_reviewer` :
 
