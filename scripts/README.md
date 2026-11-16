@@ -10,7 +10,7 @@ Le contrôle utilise uniquement la bibliothèque standard Python. Il vérifie le
 
 Les autres scripts sans dépendance externe sont :
 
-- `install_toolkit.py`, limité à `--check` et `--dry-run`, prévisualise une installation globale ou locale et signale les conflits sans écrire ;
+- `install_toolkit.py` prévisualise, installe et met à jour les ressources globales ou locales avec état, empreintes, sauvegardes, rollback et refus des personnalisations conflictuelles ;
 - `skills/project-audit/scripts/detect_project.py` inventorie les manifests représentatifs d'un projet audité sans exécuter son code.
 
 Les scénarios synthétiques sont documentés dans [`tests/`](../tests/README.md).

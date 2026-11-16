@@ -49,7 +49,7 @@ Les projets multi-repositories suivent le guide de [coordination inter-repositor
 
 ## État actuel
 
-Le skill [`project-audit`](skills/project-audit/SKILL.md) audite un projet en lecture seule. Le sous-agent [`code_reviewer`](agents/code-reviewer.toml) examine des diffs et pull requests ciblés sans modifier le code. Le manifeste et l'installateur en prévisualisation couvrent leurs destinations projet et personnelles sans écrasement. Une CI gratuite valide les pull requests ; aucun déploiement ou service payant n'est ajouté.
+Le skill [`project-audit`](skills/project-audit/SKILL.md) audite un projet en lecture seule. Le sous-agent [`code_reviewer`](agents/code-reviewer.toml) examine des diffs et pull requests ciblés sans modifier le code. Le manifeste et l'installateur sécurisé couvrent leur prévisualisation, installation et mise à jour sans écraser les personnalisations. Une CI gratuite valide les pull requests ; aucun déploiement ou service payant n'est ajouté.
 
 ## Références Codex
 
