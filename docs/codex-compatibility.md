@@ -18,7 +18,7 @@ Vérification actualisée le 15 novembre 2026 à partir de la documentation offi
 
 ## Nuance d'installation des skills
 
-La documentation actuelle reconnaît `.agents/skills` dans le dépôt et `$HOME/.agents/skills` pour l'utilisateur. Des versions antérieures ou certains helpers peuvent encore utiliser `$CODEX_HOME/skills` (souvent `$HOME/.codex/skills`). Le script du toolkit suit les emplacements actuels, annonce sa cible et reste limité à une prévisualisation ; une future écriture devra détecter explicitement tout environnement historique au lieu d'écrire dans les deux emplacements.
+La documentation actuelle reconnaît `.agents/skills` dans le dépôt et `$HOME/.agents/skills` pour l'utilisateur. Des versions antérieures ou certains helpers peuvent encore utiliser `$CODEX_HOME/skills` (souvent `$HOME/.codex/skills`). Le script du toolkit suit les emplacements actuels, annonce sa cible et permet la prévisualisation, l'installation et la mise à jour contrôlée. Il n'écrit pas simultanément dans les emplacements actuels et historiques ; toute cible existante différente est traitée comme un conflit.
 
 ## Agents et lecture seule
 
