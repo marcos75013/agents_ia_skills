@@ -5,6 +5,8 @@ Ce dossier contient le **catalogue source**. Un skill n'est créé que lorsqu'un
 ## Disponible
 
 - [`project-audit`](project-audit/SKILL.md) : audit factuel et strictement non destructif d'un projet existant ou de plusieurs dépôts coordonnés. Il charge seulement les profils technologiques détectés et sépare faits, constats, recommandations et éléments non vérifiés. Voir le [guide d'utilisation](../docs/project-audit.md).
+- [`flutter-clean-architecture`](flutter-clean-architecture/SKILL.md) : conception et implémentation proportionnées d'une feature Flutter feature-first, sans migration globale implicite.
+- [`flutter-cubit`](flutter-cubit/SKILL.md) : implémentation de flux d'état Cubit testés, lorsqu'ils sont demandés ou déjà utilisés par le projet.
 
 ## Vérification préalable
 
@@ -22,7 +24,7 @@ L'environnement inspecté fournit notamment les skills système `skill-creator`,
 | Domaine | Skills prévus | Priorité indicative |
 | --- | --- | --- |
 | Transversal | `new-project`, `feature-delivery`, `security-review`, `accessibility-audit`, `eco-design-review`, `code-review`, `cost-optimizer`, `release-readiness`, `token-optimization` | Revues ciblées après retour sur `project-audit` |
-| Flutter | `flutter-clean-architecture`, `flutter-cubit`, `flutter-testing`, `flutter-performance` | Haute pour les nouveaux projets Flutter |
+| Flutter | `flutter-testing`, `flutter-performance` | Après retour d'usage sur les deux premiers skills Flutter |
 | Angular | `angular-architecture`, `angular-testing`, `angular-performance` | Selon projet pilote |
 | Spring Boot | `spring-api-design`, `spring-security-review`, `spring-testing` | Selon projet pilote |
 | Node.js | `node-api-design`, `node-security`, `node-testing` | Selon projet pilote |

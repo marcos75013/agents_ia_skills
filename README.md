@@ -42,14 +42,14 @@ Voir [Compatibilité avec Codex](docs/codex-compatibility.md) pour les nuances l
 2. Choisir uniquement les profils technologiques et ressources nécessaires.
 3. Pour un nouveau projet, compléter le [modèle de cadrage](templates/new-project/PROJECT_BRIEF.md).
 4. Pour un projet existant, utiliser [`project-audit`](docs/project-audit.md) ; le modèle d'audit reste utile pour préparer le contexte métier.
-5. Installer les ressources selon le [guide d'installation](docs/installation.md), notamment le [Code Reviewer](docs/code-reviewer.md) pour une revue ciblée.
+5. Installer les ressources selon le [guide d'installation](docs/installation.md), notamment les skills Flutter pour une nouvelle feature et le [Code Reviewer](docs/code-reviewer.md) pour une revue ciblée.
 6. Exécuter `python3 scripts/check_toolkit.py` et les tests avant une pull request ; la CI applique ensuite les mêmes contrôles.
 
 Les projets multi-repositories suivent le guide de [coordination inter-repositories](docs/multi-repository.md). La politique de versions et de mises à jour est décrite dans [Versionnement](docs/versioning.md).
 
 ## État actuel
 
-Le skill [`project-audit`](skills/project-audit/SKILL.md) audite un projet en lecture seule. Le sous-agent [`code_reviewer`](agents/code-reviewer.toml) examine des diffs et pull requests ciblés sans modifier le code. Le manifeste et l'installateur sécurisé couvrent leur prévisualisation, installation et mise à jour sans écraser les personnalisations. Une CI gratuite valide les pull requests ; aucun déploiement ou service payant n'est ajouté.
+Le skill [`project-audit`](skills/project-audit/SKILL.md) audite un projet en lecture seule. Les skills [`flutter-clean-architecture`](skills/flutter-clean-architecture/SKILL.md) et [`flutter-cubit`](skills/flutter-cubit/SKILL.md) guident des changements Flutter explicitement demandés sans imposer de migration globale. Le sous-agent [`code_reviewer`](agents/code-reviewer.toml) examine des diffs et pull requests ciblés sans modifier le code. Le manifeste et l'installateur sécurisé couvrent leur prévisualisation, installation et mise à jour sans écraser les personnalisations. Une CI gratuite valide les pull requests ; aucun déploiement ou service payant n'est ajouté.
 
 ## Références Codex
 
