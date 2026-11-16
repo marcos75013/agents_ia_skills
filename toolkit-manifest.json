@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "toolkit_version": "0.5.0",
+  "toolkit_version": "0.5.1",
   "resources": {
     "project-audit": {
       "kind": "skill",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "source": "skills/project-audit",
       "technologies": [
         "flutter",

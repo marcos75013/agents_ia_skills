@@ -29,7 +29,7 @@ class FlutterSkillContractTests(unittest.TestCase):
 
     def test_manifest_exposes_both_flutter_only_skills(self):
         manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
-        self.assertEqual(manifest["toolkit_version"], "0.5.0")
+        self.assertEqual(manifest["toolkit_version"], "0.5.1")
         for name in ("flutter-clean-architecture", "flutter-cubit"):
             resource = manifest["resources"][name]
             self.assertEqual(resource["kind"], "skill")
