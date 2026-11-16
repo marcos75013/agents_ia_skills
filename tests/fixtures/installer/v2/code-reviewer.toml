@@ -1,0 +1,6 @@
+name = "code_reviewer"
+description = "Version two fixture for safe installer update tests."
+developer_instructions = "Review only the requested diff and remain read-only."
+
+[features]
+request_permissions_tool = false
