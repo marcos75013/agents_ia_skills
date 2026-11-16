@@ -45,7 +45,7 @@ class SafeInstallerTests(unittest.TestCase):
 
     def v2_manifest(self, directory: Path) -> Path:
         data = json.loads(MANIFEST.read_text(encoding="utf-8"))
-        data["toolkit_version"] = "0.5.0"
+        data["toolkit_version"] = "0.5.1"
         agent = data["resources"]["code-reviewer"]
         agent["version"] = "0.2.0"
         agent["source"] = "tests/fixtures/installer/v2/code-reviewer.toml"
@@ -65,7 +65,7 @@ class SafeInstallerTests(unittest.TestCase):
             )
             self.assertTrue((base / ".agents/skills/project-audit/SKILL.md").is_file())
             state = json.loads((base / STATE).read_text(encoding="utf-8"))
-            self.assertEqual(state["toolkit_version"], "0.5.0")
+            self.assertEqual(state["toolkit_version"], "0.5.1")
             self.assertEqual(set(state["resources"]), {"project-audit", "code-reviewer"})
 
     def test_repeated_install_is_idempotent(self):

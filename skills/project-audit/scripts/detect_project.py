@@ -52,6 +52,10 @@ def package_json_signals(path: Path) -> set[str]:
     return signals
 
 
+def belongs_to_flutter_project(path: Path) -> bool:
+    return any((parent / "pubspec.yaml").is_file() for parent in path.parents)
+
+
 def detect(path: Path) -> set[str]:
     if path.name == "pubspec.yaml":
         try:
@@ -69,7 +73,9 @@ def detect(path: Path) -> set[str]:
         except OSError:
             return {"java"}
         lowered = text.lower()
-        return {"spring-boot"} if any(marker in lowered for marker in SPRING_BOOT_MARKERS) else {"java"}
+        if any(marker in lowered for marker in SPRING_BOOT_MARKERS):
+            return {"spring-boot"}
+        return set() if belongs_to_flutter_project(path) else {"java"}
     return set()
 
 

@@ -44,6 +44,17 @@ class ProjectAuditDetectionTests(unittest.TestCase):
         })
         self.assertEqual(result["technologies"], ["flutter"])
 
+    def test_flutter_android_gradle_files_are_not_a_separate_java_project(self):
+        result = self.detect({
+            "apps/mobile/pubspec.yaml": "dependencies:\n  flutter:\n    sdk: flutter\n",
+            "apps/mobile/android/build.gradle.kts": 'plugins { id("com.android.application") }',
+            "apps/mobile/android/app/build.gradle.kts": 'plugins { id("org.jetbrains.kotlin.android") }',
+            "services/api/package.json": '{"dependencies":{"hono":"^4.0.0"}}',
+        })
+        self.assertEqual(result["technologies"], ["flutter", "nodejs"])
+        gradle = [item for item in result["manifests"] if item["path"].endswith("build.gradle.kts")]
+        self.assertEqual([item["signals"] for item in gradle], [[], []])
+
     def test_angular_is_not_misclassified_as_node_backend(self):
         result = self.detect({
             "angular.json": "{}",
