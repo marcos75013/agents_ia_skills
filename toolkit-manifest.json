@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "toolkit_version": "0.4.0",
+  "toolkit_version": "0.5.0",
   "resources": {
     "project-audit": {
       "kind": "skill",
@@ -32,6 +32,30 @@
       "destinations": {
         "project": ".codex/agents/code-reviewer.toml",
         "user": ".codex/agents/code-reviewer.toml"
+      }
+    },
+    "flutter-clean-architecture": {
+      "kind": "skill",
+      "version": "0.1.0",
+      "source": "skills/flutter-clean-architecture",
+      "technologies": [
+        "flutter"
+      ],
+      "destinations": {
+        "project": ".agents/skills/flutter-clean-architecture",
+        "user": ".agents/skills/flutter-clean-architecture"
+      }
+    },
+    "flutter-cubit": {
+      "kind": "skill",
+      "version": "0.1.0",
+      "source": "skills/flutter-cubit",
+      "technologies": [
+        "flutter"
+      ],
+      "destinations": {
+        "project": ".agents/skills/flutter-cubit",
+        "user": ".agents/skills/flutter-cubit"
       }
     }
   }

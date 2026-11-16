@@ -1,0 +1,4 @@
+interface:
+  display_name: "Flutter Cubit"
+  short_description: "Implement tested Flutter Cubit state flows"
+  default_prompt: "Use $flutter-cubit to implement this Flutter state flow with focused Cubit tests."

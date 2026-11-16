@@ -22,3 +22,5 @@ Additional contract tests cover incomplete repositories, Flutter projects withou
 Code Reviewer tests parse its TOML, enforce the read-only/report contract, validate representative Flutter, Angular, Spring Boot, Node.js and clean evaluation cases, and exercise project/user installation previews including conflicts. They do not run a language model or claim behavioral accuracy; follow [`docs/code-reviewer-evaluation.md`](../docs/code-reviewer-evaluation.md) for that evaluation.
 
 Safe installer tests cover project and user installation, idempotent reruns, preview immutability, state adoption, managed updates, backups, local customization conflicts, all-or-nothing preflight and symbolic-link escape attempts. Update fixtures are synthetic and never replace the toolkit's real resources.
+
+Flutter skill tests validate their distinct routing boundaries, UI metadata and manifest entries. Installer scenarios verify that the Flutter technology profile selects both Flutter skills plus common resources, while an Angular profile does not install Flutter-specific content.

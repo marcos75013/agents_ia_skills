@@ -17,7 +17,7 @@ L'installateur ne fusionne pas des personnalisations. Si un conflit est signalé
 
 ## Installation dans un projet
 
-Depuis la racine du toolkit, prévisualiser les deux ressources :
+Depuis la racine du toolkit, prévisualiser les ressources communes :
 
 ```bash
 python3 scripts/install_toolkit.py \
@@ -46,6 +46,15 @@ Les destinations sont :
 - `.codex/agents-ia-toolkit-state.json` pour l'état de gestion.
 
 Ajouter `--technology flutter`, `angular`, `spring-boot`, `nodejs` ou `multi-technology` pour filtrer les ressources compatibles. Sans `--resource`, toutes les ressources compatibles sélectionnées par le filtre sont planifiées.
+
+Pour un projet Flutter, le profil installe les ressources communes et les deux skills Flutter :
+
+```bash
+python3 scripts/install_toolkit.py --check --scope project --target /chemin/du/projet --technology flutter
+python3 scripts/install_toolkit.py --install --scope project --target /chemin/du/projet --technology flutter
+```
+
+Cela ajoute aussi `.agents/skills/flutter-clean-architecture/` et `.agents/skills/flutter-cubit/`. Pour sélectionner un seul workflow, utiliser `--resource flutter-clean-architecture` ou `--resource flutter-cubit` à la place du filtre technologique.
 
 ## Installation personnelle
 
@@ -114,6 +123,13 @@ Pour la revue :
 
 ```text
 Utilise le sous-agent code_reviewer pour examiner le diff de cette branche contre main. Ne corrige rien.
+```
+
+Pour une nouvelle feature Flutter :
+
+```text
+Utilise $flutter-clean-architecture pour implémenter cette feature sans migration globale.
+Utilise $flutter-cubit pour son flux d'état et ses tests ciblés.
 ```
 
 Le rapport d'audit doit rester un artefact de revue ou de backlog. Ne recopier dans `AGENTS.md` que les conventions stables et validées. Pour plusieurs repositories, installer les ressources dans chaque environnement, auditer séparément, puis utiliser le guide [Projets multi-repositories](multi-repository.md).

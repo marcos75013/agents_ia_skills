@@ -1,0 +1,4 @@
+interface:
+  display_name: "Flutter Clean Architecture"
+  short_description: "Build proportionate feature-first Flutter boundaries"
+  default_prompt: "Use $flutter-clean-architecture to implement this Flutter feature with proportionate feature-first boundaries."
